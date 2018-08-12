@@ -12,6 +12,9 @@
 #import "STKAutoRecoveringHTTPDataSource.h"
 #import "SampleQueueId.h"
 #import <AVFoundation/AVFoundation.h>
+#import <EGOCache.h>
+#import <FMDB.h>
+#import <SVProgressHUD.h>
 
 @interface AppDelegate()
 {
@@ -83,23 +86,23 @@
 {
     NSLog(@"++++++++++++++++++++++++++++++++++++++++  audioPlayerViewQueueShortFileSelected:(AudioPlayerView*)audioPlayerView");
     
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"airplane" ofType:@"aac"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"_u_31_40" ofType:@"mp3"];
 	NSURL* url = [NSURL fileURLWithPath:path];
 	
 	STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
     
 	[audioPlayer queueDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
-    [audioPlayer seekToTime:5000.0];
-    
+    //[audioPlayer seekToTime:.0];
 }
 
--(void) audioPlayerViewPlayFromLocalFileSelected:(AudioPlayerView*)audioPlayerView
+-(void)audioPlayerViewPlayFromLocalFileSelected:(AudioPlayerView*)audioPlayerView
 {
-	NSString* path = [[NSBundle mainBundle] pathForResource:@"sample" ofType:@"m4a"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"_u_31_40" ofType:@"mp3"];
+	//NSString* path = [[NSBundle mainBundle] pathForResource:@"sample" ofType:@"m4a"];
 	NSURL* url = [NSURL fileURLWithPath:path];
 	
 	STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
-    [audioPlayer seekToTime:5000.0];
+    //[audioPlayer seekToTime:5000.0];
     
 	[audioPlayer setDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
     
@@ -111,7 +114,7 @@
 //    NSURL* url = [NSURL fileURLWithPath:path];
 //
 //    STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
-    [audioPlayer seekToTime:1.5];
+    [audioPlayer seekToTime:76];
     
     //[audioPlayer setDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
     

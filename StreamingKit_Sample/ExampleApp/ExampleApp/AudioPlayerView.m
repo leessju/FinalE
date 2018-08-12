@@ -302,7 +302,6 @@
 
 -(NSString*) formatTimeFromSeconds:(int)totalSeconds
 {
-    
     int seconds = totalSeconds % 60;
     int minutes = (totalSeconds / 60) % 60;
     int hours = totalSeconds / 3600;
@@ -310,7 +309,7 @@
     return [NSString stringWithFormat:@"%02d:%02d:%02d", hours, minutes, seconds];
 }
 
--(void) updateControls
+-(void)updateControls
 {
 	if (audioPlayer == nil)
 	{

@@ -1,0 +1,21 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'FinalE' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for FinalE
+  pod 'ASIHTTPRequest'
+  pod 'FMDB'
+  pod 'AFNetworking'
+  pod 'SVProgressHUD'
+  pod 'SDWebImage'
+  pod 'EGOCache', '~> 2.2.0'
+
+  target 'FinalETests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
