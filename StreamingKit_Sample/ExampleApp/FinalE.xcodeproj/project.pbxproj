@@ -26,6 +26,10 @@
 		A17FFB6318A0028300BAA7FF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A17FFB6218A0028300BAA7FF /* AudioToolbox.framework */; };
 		A17FFB6918A002E400BAA7FF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1F5E491189EB3F20070B03F /* AVFoundation.framework */; };
 		A1EBEE64188DE34500681B04 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1EBEE63188DE34500681B04 /* SystemConfiguration.framework */; };
+		A73BEE952122AFA20077999A /* Unit_41_50.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A73BEE912122AFA20077999A /* Unit_41_50.mp3 */; };
+		A73BEE962122AFA20077999A /* Unit_21_30.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A73BEE922122AFA20077999A /* Unit_21_30.mp3 */; };
+		A73BEE972122AFA20077999A /* Unit_31_40.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A73BEE932122AFA20077999A /* Unit_31_40.mp3 */; };
+		A73BEE982122AFA20077999A /* Unit_51_55.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A73BEE942122AFA20077999A /* Unit_51_55.mp3 */; };
 		A7F315D621201FA50066C183 /* _u_31_40.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A7F315D421201FA50066C183 /* _u_31_40.mp3 */; };
 		A7F315D721201FA50066C183 /* airplane.aac in Resources */ = {isa = PBXBuildFile; fileRef = A7F315D521201FA50066C183 /* airplane.aac */; };
 /* End PBXBuildFile section */
@@ -103,6 +107,10 @@
 		A1EBEE63188DE34500681B04 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A1F5E48F189EB3CB0070B03F /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		A1F5E491189EB3F20070B03F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		A73BEE912122AFA20077999A /* Unit_41_50.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Unit_41_50.mp3; path = Resources/Unit_41_50.mp3; sourceTree = "<group>"; };
+		A73BEE922122AFA20077999A /* Unit_21_30.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Unit_21_30.mp3; path = Resources/Unit_21_30.mp3; sourceTree = "<group>"; };
+		A73BEE932122AFA20077999A /* Unit_31_40.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Unit_31_40.mp3; path = Resources/Unit_31_40.mp3; sourceTree = "<group>"; };
+		A73BEE942122AFA20077999A /* Unit_51_55.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Unit_51_55.mp3; path = Resources/Unit_51_55.mp3; sourceTree = "<group>"; };
 		A7F315D421201FA50066C183 /* _u_31_40.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = _u_31_40.mp3; path = Resources/_u_31_40.mp3; sourceTree = "<group>"; };
 		A7F315D521201FA50066C183 /* airplane.aac */ = {isa = PBXFileReference; lastKnownFileType = file; name = airplane.aac; path = Resources/airplane.aac; sourceTree = "<group>"; };
 		C5EE28F605542F449965F61B /* Pods-FinalETests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalETests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FinalETests/Pods-FinalETests.release.xcconfig"; sourceTree = "<group>"; };
@@ -219,6 +227,10 @@
 		A111596A188D6C4B00641365 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A73BEE922122AFA20077999A /* Unit_21_30.mp3 */,
+				A73BEE932122AFA20077999A /* Unit_31_40.mp3 */,
+				A73BEE912122AFA20077999A /* Unit_41_50.mp3 */,
+				A73BEE942122AFA20077999A /* Unit_51_55.mp3 */,
 				A7F315D421201FA50066C183 /* _u_31_40.mp3 */,
 				A7F315D521201FA50066C183 /* airplane.aac */,
 				A111596B188D6C8100641365 /* sample.m4a */,
@@ -358,8 +370,12 @@
 			files = (
 				A7F315D721201FA50066C183 /* airplane.aac in Resources */,
 				A7F315D621201FA50066C183 /* _u_31_40.mp3 in Resources */,
+				A73BEE972122AFA20077999A /* Unit_31_40.mp3 in Resources */,
+				A73BEE962122AFA20077999A /* Unit_21_30.mp3 in Resources */,
 				A111593F188D686000641365 /* InfoPlist.strings in Resources */,
+				A73BEE982122AFA20077999A /* Unit_51_55.mp3 in Resources */,
 				A111596C188D6C8100641365 /* sample.m4a in Resources */,
+				A73BEE952122AFA20077999A /* Unit_41_50.mp3 in Resources */,
 				A1115947188D686000641365 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -110,14 +110,7 @@
 
 -(void) audioPlayerViewSeekFromLocalFileSelected:(AudioPlayerView*)audioPlayerView
 {
-//    NSString* path = [[NSBundle mainBundle] pathForResource:@"sample" ofType:@"m4a"];
-//    NSURL* url = [NSURL fileURLWithPath:path];
-//
-//    STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
     [audioPlayer seekToTime:76];
-    
-    //[audioPlayer setDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
-    
 }
 
 -(void) audioPlayerViewQueuePcmWaveFileSelected:(AudioPlayerView*)audioPlayerView
