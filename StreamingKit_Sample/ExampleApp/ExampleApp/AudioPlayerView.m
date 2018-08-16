@@ -40,14 +40,18 @@
 ///
 
 @interface AudioPlayerView()
--(void) setupTimer;
--(void) updateControls;
+
+- (void)setupTimer;
+- (void)updateControls;
+
 @end
 
 @implementation AudioPlayerView
-@synthesize audioPlayer, delegate;
 
-- (id)initWithFrame:(CGRect)frame andAudioPlayer:(STKAudioPlayer*)audioPlayerIn
+@synthesize audioPlayer;
+@synthesize delegate;
+
+- (id)initWithFrame:(CGRect)frame andAudioPlayer:(STKAudioPlayer *)audioPlayerIn
 {
     self = [super initWithFrame:frame];
 	
@@ -57,6 +61,7 @@
         
 		CGSize size = CGSizeMake(220, 50);
 		
+        // **************************************************************************************************************************
 		playFromHTTPButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 		playFromHTTPButton.frame = CGRectMake((frame.size.width - size.width) / 2, frame.size.height * 0.10, size.width, size.height);
 		[playFromHTTPButton addTarget:self action:@selector(playFromHTTPButtonTouched) forControlEvents:UIControlEventTouchUpInside];
@@ -113,24 +118,19 @@
         
         enableEqSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(frame.size.width - size.width - 30, frame.size.height * 0.15 + 180, size.width, size.height)];
         enableEqSwitch.on = audioPlayer.equalizerEnabled;
-        
         [enableEqSwitch addTarget:self action:@selector(onEnableEqSwitch) forControlEvents:UIControlEventAllTouchEvents];
 
         metadataLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, slider.frame.origin.y + slider.frame.size.height + 10, frame.size.width, 25)];
-        
         metadataLabel.textAlignment = NSTextAlignmentCenter;
         metadataLabel.font = [UIFont boldSystemFontOfSize:17.0f];
         
         label = [[UILabel alloc] initWithFrame:CGRectMake(0, slider.frame.origin.y + slider.frame.size.height + 40, frame.size.width, 25)];
-		
         label.textAlignment = NSTextAlignmentCenter;
         
         statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, slider.frame.origin.y + slider.frame.size.height + label.frame.size.height + 50, frame.size.width, 50)];
-		
         statusLabel.textAlignment = NSTextAlignmentCenter;
 		
 		meter = [[UIView alloc] initWithFrame:CGRectMake(0, 450, 0, 20)];
-		
 		meter.backgroundColor = [UIColor greenColor];
 		
 		[self addSubview:slider];
@@ -149,21 +149,28 @@
 		[self addSubview:meter];
 		[self addSubview:muteButton];
         [self addSubview:enableEqSwitch];
+        // **************************************************************************************************************************
         
 		[self setupTimer];
 		[self updateControls];
+        
+        STKAudioPlayer *audioPlayer = [[STKAudioPlayer alloc] initWithOptions:(STKAudioPlayerOptions){ .enableVolumeMixer = NO, .equalizerBandFrequencies = {50, 100, 200, 400, 800, 1600, 2600, 16000} } ];
+        audioPlayer.delegate = self;
+        audioPlayer.meteringEnabled = YES;
+        audioPlayer.volume = 1.0;
+        //[audioPlayer playURL:url];
+        [audioPlayer play:@"http://www.abstractpath.com/files/audiosamples/sample.mp3"];
     }
 	
     return self;
 }
 
--(void) onEnableEqSwitch
+- (void)onEnableEqSwitch
 {
     audioPlayer.equalizerEnabled = self->enableEqSwitch.on;
-    
 }
 
--(void) sliderChanged
+- (void)sliderChanged
 {
 	if (!audioPlayer)
 	{
@@ -175,27 +182,26 @@
 	[audioPlayer seekToTime:slider.value];
 }
 
--(void) setupTimer
+- (void)setupTimer
 {
 	timer = [NSTimer timerWithTimeInterval:0.001 target:self selector:@selector(tick) userInfo:nil repeats:YES];
-	
 	[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
 }
 
--(void) tick
+- (void)tick
 {
 	if (!audioPlayer)
 	{
-		slider.value = 0;
-        label.text = @"";
-        statusLabel.text = @"";
+		slider.value        = 0;
+        label.text          = @"";
+        statusLabel.text    = @"";
 		
 		return;
 	}
 	
     if (audioPlayer.currentlyPlayingQueueItemId == nil)
     {
-        slider.value = 0;
+        slider.value        = 0;
         slider.minimumValue = 0;
         slider.maximumValue = 0;
         
@@ -208,63 +214,61 @@
     {
         slider.minimumValue = 0;
         slider.maximumValue = audioPlayer.duration;
-        slider.value = audioPlayer.progress;
+        slider.value        = audioPlayer.progress;
         
         label.text = [NSString stringWithFormat:@"%@ - %@", [self formatTimeFromSeconds:audioPlayer.progress], [self formatTimeFromSeconds:audioPlayer.duration]];
     }
     else
     {
-        slider.value = 0;
+        slider.value        = 0;
         slider.minimumValue = 0;
         slider.maximumValue = 0;
         
-        label.text =  [NSString stringWithFormat:@"Live stream %@", [self formatTimeFromSeconds:audioPlayer.progress]];
+        label.text = [NSString stringWithFormat:@"Live stream %@", [self formatTimeFromSeconds:audioPlayer.progress]];
     }
     
-    statusLabel.text = audioPlayer.state == STKAudioPlayerStateBuffering ? @"buffering" : @"";
-	
-	CGFloat newWidth = 320 * (([audioPlayer averagePowerInDecibelsForChannel:1] + 60) / 60);
-	
-	meter.frame = CGRectMake(0, 460, newWidth, 20);
+    statusLabel.text    = audioPlayer.state == STKAudioPlayerStateBuffering ? @"buffering" : @"";
+	CGFloat newWidth    = 320 * (([audioPlayer averagePowerInDecibelsForChannel:1] + 60) / 60);
+	meter.frame         = CGRectMake(0, 460, newWidth, 20);
 }
 
--(void) playFromHTTPButtonTouched
+- (void)playFromHTTPButtonTouched
 {
 	[self.delegate audioPlayerViewPlayFromHTTPSelected:self];
     metadataLabel.text = nil;
 }
 
--(void) playFromIcecasButtonTouched
+- (void)playFromIcecasButtonTouched
 {
     [self.delegate audioPlayerViewPlayFromIcecastSelected:self];
     metadataLabel.text = nil;
 }
 
--(void) playFromLocalFileButtonTouched
+- (void)playFromLocalFileButtonTouched
 {
 	[self.delegate audioPlayerViewPlayFromLocalFileSelected:self];
     metadataLabel.text = nil;
 }
 
--(void) seekFromLocalFileButtonTouched
+- (void)seekFromLocalFileButtonTouched
 {
     [self.delegate audioPlayerViewSeekFromLocalFileSelected:self];
     metadataLabel.text = nil;
 }
 
--(void) queueShortFileButtonTouched
+- (void)queueShortFileButtonTouched
 {
 	[self.delegate audioPlayerViewQueueShortFileSelected:self];
     metadataLabel.text = nil;
 }
 
--(void) queuePcmWaveFileButtonTouched
+- (void)queuePcmWaveFileButtonTouched
 {
 	[self.delegate audioPlayerViewQueuePcmWaveFileSelected:self];
     metadataLabel.text = nil;
 }
 
--(void) muteButtonPressed
+- (void)muteButtonPressed
 {
 	audioPlayer.muted = !audioPlayer.muted;
 	
@@ -278,12 +282,12 @@
 	}
 }
 
--(void) stopButtonPressed
+- (void)stopButtonPressed
 {
     [audioPlayer stop];
 }
 
--(void) playButtonPressed
+- (void)playButtonPressed
 {
 	if (!audioPlayer)
 	{
@@ -300,16 +304,16 @@
 	}
 }
 
--(NSString*) formatTimeFromSeconds:(int)totalSeconds
+- (NSString *)formatTimeFromSeconds:(int)totalSeconds
 {
     int seconds = totalSeconds % 60;
     int minutes = (totalSeconds / 60) % 60;
-    int hours = totalSeconds / 3600;
+    int hours   = totalSeconds / 3600;
     
     return [NSString stringWithFormat:@"%02d:%02d:%02d", hours, minutes, seconds];
 }
 
--(void)updateControls
+- (void)updateControls
 {
 	if (audioPlayer == nil)
 	{
@@ -331,44 +335,44 @@
     [self tick];
 }
 
--(void) setAudioPlayer:(STKAudioPlayer*)value
+- (void)setAudioPlayer:(STKAudioPlayer *)value
 {
 	if (audioPlayer)
 	{
 		audioPlayer.delegate = nil;
 	}
 
-	audioPlayer = value;
-	audioPlayer.delegate = self;
+	audioPlayer             = value;
+	audioPlayer.delegate    = self;
 	
 	[self updateControls];
 }
 
--(STKAudioPlayer*) audioPlayer
+- (STKAudioPlayer *)audioPlayer
 {
 	return audioPlayer;
 }
 
--(void) audioPlayer:(STKAudioPlayer*)audioPlayer stateChanged:(STKAudioPlayerState)state previousState:(STKAudioPlayerState)previousState
+- (void)audioPlayer:(STKAudioPlayer *)audioPlayer stateChanged:(STKAudioPlayerState)state previousState:(STKAudioPlayerState)previousState
 {
 	[self updateControls];
 }
 
--(void) audioPlayer:(STKAudioPlayer*)audioPlayer unexpectedError:(STKAudioPlayerErrorCode)errorCode
+- (void)audioPlayer:(STKAudioPlayer *)audioPlayer unexpectedError:(STKAudioPlayerErrorCode)errorCode
 {
 	[self updateControls];
 }
 
--(void) audioPlayer:(STKAudioPlayer*)audioPlayer didStartPlayingQueueItemId:(NSObject*)queueItemId
+- (void)audioPlayer:(STKAudioPlayer *)audioPlayer didStartPlayingQueueItemId:(NSObject *)queueItemId
 {
-	SampleQueueId* queueId = (SampleQueueId*)queueItemId;
+	SampleQueueId *queueId = (SampleQueueId *)queueItemId;
     
     NSLog(@"Started: %@", [queueId.url description]);
     
 	[self updateControls];
 }
 
--(void) audioPlayer:(STKAudioPlayer*)audioPlayer didFinishBufferingSourceWithQueueItemId:(NSObject*)queueItemId
+- (void)audioPlayer:(STKAudioPlayer *)audioPlayer didFinishBufferingSourceWithQueueItemId:(NSObject*)queueItemId
 {
 	[self updateControls];
     

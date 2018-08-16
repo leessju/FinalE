@@ -10,7 +10,7 @@
 
 @implementation SampleQueueId
 
--(id) initWithUrl:(NSURL*)url andCount:(int)count
+- (id)initWithUrl:(NSURL *)url andCount:(int)count
 {
     if (self = [super init])
     {
@@ -21,7 +21,7 @@
     return self;
 }
 
--(BOOL) isEqual:(id)object
+- (BOOL)isEqual:(id)object
 {
     if (object == nil)
     {
@@ -33,10 +33,10 @@
         return NO;
     }
     
-    return [((SampleQueueId*)object).url isEqual: self.url] && ((SampleQueueId*)object).count == self.count;
+    return [((SampleQueueId *)object).url isEqual: self.url] && ((SampleQueueId *)object).count == self.count;
 }
 
--(NSString*) description
+- (NSString *)description
 {
     return [self.url description];
 }

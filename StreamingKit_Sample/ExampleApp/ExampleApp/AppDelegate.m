@@ -12,9 +12,6 @@
 #import "STKAutoRecoveringHTTPDataSource.h"
 #import "SampleQueueId.h"
 #import <AVFoundation/AVFoundation.h>
-#import <EGOCache.h>
-#import <FMDB.h>
-#import <SVProgressHUD.h>
 
 @interface AppDelegate()
 {
@@ -24,7 +21,7 @@
 
 @implementation AppDelegate
 
--(BOOL) application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     NSLog(@"______________________________________________");
     
@@ -45,8 +42,7 @@
 	audioPlayer.meteringEnabled = YES;
 	audioPlayer.volume = 1;
     
-	AudioPlayerView* audioPlayerView = [[AudioPlayerView alloc] initWithFrame:self.window.bounds andAudioPlayer:audioPlayer];
-    
+	AudioPlayerView *audioPlayerView = [[AudioPlayerView alloc] initWithFrame:self.window.bounds andAudioPlayer:audioPlayer];
 	audioPlayerView.delegate = self;
     
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
@@ -59,38 +55,35 @@
     return YES;
 }
 
--(BOOL) canBecomeFirstResponder
+- (BOOL)canBecomeFirstResponder
 {
     return YES;
 }
 
--(void) audioPlayerViewPlayFromHTTPSelected:(AudioPlayerView*)audioPlayerView
+- (void)audioPlayerViewPlayFromHTTPSelected:(AudioPlayerView *)audioPlayerView
 {
-    NSURL* url = [NSURL URLWithString:@"http://www.abstractpath.com/files/audiosamples/sample.mp3"];
+    NSURL *url = [NSURL URLWithString:@"http://www.abstractpath.com/files/audiosamples/sample.mp3"];
     
-    STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
-    
+    STKDataSource *dataSource = [STKAudioPlayer dataSourceFromURL:url];
 	[audioPlayer setDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
 }
 
--(void) audioPlayerViewPlayFromIcecastSelected:(AudioPlayerView *)audioPlayerView
+- (void)audioPlayerViewPlayFromIcecastSelected:(AudioPlayerView *)audioPlayerView
 {
-    NSURL* url = [NSURL URLWithString:@"http://nashe.streamr.ru/jazz-128.mp3"];
+    NSURL *url = [NSURL URLWithString:@"http://nashe.streamr.ru/jazz-128.mp3"];
     
-    STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
-    
+    STKDataSource *dataSource = [STKAudioPlayer dataSourceFromURL:url];
     [audioPlayer setDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
 }
 
--(void) audioPlayerViewQueueShortFileSelected:(AudioPlayerView*)audioPlayerView
+-(void)audioPlayerViewQueueShortFileSelected:(AudioPlayerView*)audioPlayerView
 {
     NSLog(@"++++++++++++++++++++++++++++++++++++++++  audioPlayerViewQueueShortFileSelected:(AudioPlayerView*)audioPlayerView");
     
     NSString *path = [[NSBundle mainBundle] pathForResource:@"_u_31_40" ofType:@"mp3"];
-	NSURL* url = [NSURL fileURLWithPath:path];
+	NSURL *url = [NSURL fileURLWithPath:path];
 	
-	STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
-    
+	STKDataSource *dataSource = [STKAudioPlayer dataSourceFromURL:url];
 	[audioPlayer queueDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
     //[audioPlayer seekToTime:.0];
 }
@@ -98,27 +91,22 @@
 -(void)audioPlayerViewPlayFromLocalFileSelected:(AudioPlayerView*)audioPlayerView
 {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"_u_31_40" ofType:@"mp3"];
-	//NSString* path = [[NSBundle mainBundle] pathForResource:@"sample" ofType:@"m4a"];
-	NSURL* url = [NSURL fileURLWithPath:path];
+	NSURL *url = [NSURL fileURLWithPath:path];
 	
-	STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
-    //[audioPlayer seekToTime:5000.0];
-    
+	STKDataSource *dataSource = [STKAudioPlayer dataSourceFromURL:url];
 	[audioPlayer setDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
-    
 }
 
--(void) audioPlayerViewSeekFromLocalFileSelected:(AudioPlayerView*)audioPlayerView
+- (void)audioPlayerViewSeekFromLocalFileSelected:(AudioPlayerView*)audioPlayerView
 {
     [audioPlayer seekToTime:76];
 }
 
--(void) audioPlayerViewQueuePcmWaveFileSelected:(AudioPlayerView*)audioPlayerView
+- (void)audioPlayerViewQueuePcmWaveFileSelected:(AudioPlayerView*)audioPlayerView
 {
-	NSURL* url = [NSURL URLWithString:@"http://www.abstractpath.com/files/audiosamples/perfectly.wav"];
+	NSURL *url = [NSURL URLWithString:@"http://www.abstractpath.com/files/audiosamples/perfectly.wav"];
     
     STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
-    
 	[audioPlayer queueDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
 }
 

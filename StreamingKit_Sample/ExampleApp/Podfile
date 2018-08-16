@@ -6,12 +6,6 @@ target 'FinalE' do
   # use_frameworks!
 
   # Pods for FinalE
-  pod 'ASIHTTPRequest'
-  pod 'FMDB'
-  pod 'AFNetworking'
-  pod 'SVProgressHUD'
-  pod 'SDWebImage'
-  pod 'EGOCache', '~> 2.2.0'
 
   target 'FinalETests' do
     inherit! :search_paths

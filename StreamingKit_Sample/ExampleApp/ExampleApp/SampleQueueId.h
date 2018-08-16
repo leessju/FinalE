@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface SampleQueueId : NSObject
+
 @property (readwrite) int count;
 @property (readwrite) NSURL* url;
 
--(id) initWithUrl:(NSURL*)url andCount:(int)count;
+- (id)initWithUrl:(NSURL *)url andCount:(int)count;
 
 @end
