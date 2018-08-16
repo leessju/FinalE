@@ -13,6 +13,7 @@
 #import "SampleQueueId.h"
 #import <AVFoundation/AVFoundation.h>
 
+
 @interface AppDelegate()
 {
     STKAudioPlayer* audioPlayer;
@@ -29,9 +30,11 @@
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&error];
 	[[AVAudioSession sharedInstance] setActive:YES error:&error];
-    
     Float32 bufferLength = 0.1;
-    AudioSessionSetProperty(kAudioSessionProperty_PreferredHardwareIOBufferDuration, sizeof(bufferLength), &bufferLength);
+    [[AVAudioSession sharedInstance] setPreferredIOBufferDuration:bufferLength error:&error];
+    
+//    Float32 bufferLength = 0.1;
+//    AudioSessionSetProperty(kAudioSessionProperty_PreferredHardwareIOBufferDuration, sizeof(bufferLength), &bufferLength);
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = [[UIViewController alloc] init];

@@ -159,7 +159,7 @@
         audioPlayer.meteringEnabled = YES;
         audioPlayer.volume = 1.0;
         //[audioPlayer playURL:url];
-        [audioPlayer play:@"http://www.abstractpath.com/files/audiosamples/sample.mp3"];
+        //[audioPlayer play:@"http://www.abstractpath.com/files/audiosamples/sample.mp3"];
     }
 	
     return self;
@@ -195,7 +195,6 @@
 		slider.value        = 0;
         label.text          = @"";
         statusLabel.text    = @"";
-		
 		return;
 	}
 	
@@ -204,27 +203,25 @@
         slider.value        = 0;
         slider.minimumValue = 0;
         slider.maximumValue = 0;
-        
-        label.text = @"";
-        
+        label.text          = @"";
         return;
     }
     
+    // 로컬파일 경우
     if (audioPlayer.duration != 0)
     {
         slider.minimumValue = 0;
         slider.maximumValue = audioPlayer.duration;
         slider.value        = audioPlayer.progress;
-        
-        label.text = [NSString stringWithFormat:@"%@ - %@", [self formatTimeFromSeconds:audioPlayer.progress], [self formatTimeFromSeconds:audioPlayer.duration]];
+        label.text          = [NSString stringWithFormat:@"%@ - %@", [self formatTimeFromSeconds:audioPlayer.progress], [self formatTimeFromSeconds:audioPlayer.duration]];
     }
     else
     {
+        // 스트리밍 일때
         slider.value        = 0;
         slider.minimumValue = 0;
         slider.maximumValue = 0;
-        
-        label.text = [NSString stringWithFormat:@"Live stream %@", [self formatTimeFromSeconds:audioPlayer.progress]];
+        label.text          = [NSString stringWithFormat:@"Live stream %@", [self formatTimeFromSeconds:audioPlayer.progress]];
     }
     
     statusLabel.text    = audioPlayer.state == STKAudioPlayerStateBuffering ? @"buffering" : @"";
@@ -366,13 +363,11 @@
 - (void)audioPlayer:(STKAudioPlayer *)audioPlayer didStartPlayingQueueItemId:(NSObject *)queueItemId
 {
 	SampleQueueId *queueId = (SampleQueueId *)queueItemId;
-    
     NSLog(@"Started: %@", [queueId.url description]);
-    
 	[self updateControls];
 }
 
-- (void)audioPlayer:(STKAudioPlayer *)audioPlayer didFinishBufferingSourceWithQueueItemId:(NSObject*)queueItemId
+- (void)audioPlayer:(STKAudioPlayer *)audioPlayer didFinishBufferingSourceWithQueueItemId:(NSObject *)queueItemId
 {
 	[self updateControls];
     
@@ -381,9 +376,7 @@
     if (repeatSwitch.on)
     {
         SampleQueueId* queueId = (SampleQueueId*)queueItemId;
-
         NSLog(@"Requeuing: %@", [queueId.url description]);
-
         [self->audioPlayer queueDataSource:[STKAudioPlayer dataSourceFromURL:queueId.url] withQueueItemId:[[SampleQueueId alloc] initWithUrl:queueId.url andCount:queueId.count + 1]];
     }
 }
@@ -391,9 +384,7 @@
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer didFinishPlayingQueueItemId:(NSObject*)queueItemId withReason:(STKAudioPlayerStopReason)stopReason andProgress:(double)progress andDuration:(double)duration
 {
 	[self updateControls];
- 
     SampleQueueId* queueId = (SampleQueueId*)queueItemId;
-    
     NSLog(@"Finished: %@", [queueId.url description]);
 }
 
